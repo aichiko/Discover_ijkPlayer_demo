@@ -38,7 +38,11 @@
     [self addSubview:self.horizontalLabel];
     [self addSubview:self.backButton];
     
+    
     [self.topImageView addSubview:self.titleLabel];
+    [self.topImageView addSubview:self.careButton];
+    [self.topImageView addSubview:self.shareButton];
+    [self.topImageView addSubview:self.selectButton];
     
     [self.bottomImageView addSubview:self.playButton];
     [self.bottomImageView addSubview:self.progressView];
@@ -83,6 +87,24 @@
         make.leading.equalTo(self.bottomImageView.mas_leading).offset(5);
         make.bottom.equalTo(self.bottomImageView.mas_bottom).offset(-5);
         make.width.height.mas_equalTo(30);
+    }];
+    
+    [_careButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backButton);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+        make.right.mas_equalTo(-60);
+    }];
+
+    [_shareButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backButton);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+        make.right.mas_equalTo(-15);
+    }];
+    
+    [_selectButton mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.backButton);
+        make.size.mas_equalTo(CGSizeMake(80, 30));
+        make.right.mas_equalTo(-30);
     }];
     
     [_currentTimeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -174,6 +196,21 @@
     }
 }
 
+#pragma mark - setting
+
+- (void)setIsLandscape:(BOOL)isLandscape {
+    _isLandscape = isLandscape;
+    if (_isLandscape) {
+        self.selectButton.hidden = NO;
+        self.careButton.hidden = YES;
+        self.shareButton.hidden = YES;
+    }else {
+        self.selectButton.hidden = YES;
+        self.careButton.hidden = NO;
+        self.shareButton.hidden = NO;
+    }
+}
+
 #pragma mark - getting
 
 - (UIImageView *)topImageView {
@@ -217,6 +254,32 @@
         [_playButton setImage:[UIImage imageNamed:@"CCPlayer_pause"] forState:UIControlStateSelected];
     }
     return _playButton;
+}
+
+- (UIButton *)careButton {
+    if (!_careButton) {
+        _careButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_careButton setImage:[UIImage imageNamed:@"meetPlay_like"] forState:UIControlStateNormal];
+        [_careButton setImage:[UIImage imageNamed:@"meetPlay_just_like@2x"] forState:UIControlStateSelected];
+    }
+    return _careButton;
+}
+
+- (UIButton *)shareButton {
+    if (!_shareButton) {
+        _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_shareButton setImage:[UIImage imageNamed:@"meetPlay_share"] forState:UIControlStateNormal];
+    }
+    return _shareButton;
+}
+
+- (UIButton *)selectButton {
+    if (!_selectButton) {
+        _selectButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_selectButton setTitle:@"选会场" forState:UIControlStateNormal];
+        [_selectButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    }
+    return _selectButton;
 }
 
 - (UILabel *)currentTimeLabel {

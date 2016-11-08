@@ -20,7 +20,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(reloadTableView:)];
+    
     [self configTableView];
+}
+
+- (void)reloadTableView:(UIBarButtonItem *)button {
+    [self.tableView reloadData];
 }
 
 - (void)configTableView {
@@ -33,10 +39,19 @@
     }];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 
 #pragma mark - UITableViewDataSource,UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return section == 1?3:1;
@@ -51,11 +66,21 @@
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"discoverCell"];
     }
+    cell.textLabel.numberOfLines = 0;
     if (indexPath.section == 0 && indexPath.row == 0) {
         cell.textLabel.text = @"朋友圈";
     }else if (indexPath.row == 0 && indexPath.section == 1){
         cell.textLabel.text = @"ijkPlayer";
+    }else {
+        cell.textLabel.text = @"ijkPlayer\nijkPlayer\nijkPlayer\nijkPlayer";
     }
+//    UILabel *accessoryLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 44)];
+//    accessoryLabel.textAlignment = NSTextAlignmentRight;
+//    accessoryLabel.font = [UIFont systemFontOfSize:12];
+//    accessoryLabel.textColor = [UIColor colorWithRed:0.22 green:0.71 blue:0.28 alpha:1];
+//    accessoryLabel.adjustsFontSizeToFitWidth = YES;
+//    cell.accessoryView = accessoryLabel;
+//    accessoryLabel.text = @"直播";
     return cell;
 }
 

@@ -164,6 +164,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
                 //
                 self.controlView.fullScreenButton.selected = YES;
                 self.isFullScreen = YES;
+                self.controlView.isLandscape = YES;
 //                [self.controlView.backButton setImage:ZFPlayerImage(@"ZFPlayer_back_full") forState:UIControlStateNormal];
                 // 设置返回按钮的约束
 //                [self.controlView.backButton mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -177,18 +178,21 @@ typedef NS_ENUM(NSInteger, PanDirection){
                 //
                 self.controlView.fullScreenButton.selected = NO;
                 self.isFullScreen = NO;
+                self.controlView.isLandscape = NO;
             }
                 break;
             case UIInterfaceOrientationLandscapeLeft:{
                 //
                 self.controlView.fullScreenButton.selected = YES;
                 self.isFullScreen = YES;
+                self.controlView.isLandscape = YES;
             }
                 break;
             case UIInterfaceOrientationLandscapeRight:{
                 //
                 self.controlView.fullScreenButton.selected = YES;
                 self.isFullScreen = YES;
+                self.controlView.isLandscape = YES;
             }
                 break;
             default:
@@ -240,7 +244,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     /**
      *  返回按钮点击事件
      */
-    [[[self.controlView.backButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] subscribeNext:^(id x) {
+    [[[[self.controlView.backButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] deliverOnMainThread] subscribeNext:^(id x) {
         @strongify(self)
         if (self.isLocked) {
             [self unLockTheScreen];
@@ -261,7 +265,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     /**
      *  播放按钮点击事件
      */
-    [[[self.controlView.playButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] subscribeNext:^(UIButton *button) {
+    [[[[self.controlView.playButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] deliverOnMainThread] subscribeNext:^(UIButton *button) {
         @strongify(self)
         if (button.selected) {
             [self.player pause];
@@ -273,8 +277,12 @@ typedef NS_ENUM(NSInteger, PanDirection){
     /**
      *  全屏按钮点击事件
      */
-    [[[self.controlView.fullScreenButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] subscribeNext:^(UIButton *button) {
+    [[[[self.controlView.fullScreenButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] deliverOnMainThread] subscribeNext:^(UIButton *button) {
         @strongify(self)
+        if (self.isLocked) {
+            [self unLockTheScreen];
+            return;
+        }
         if (button.selected) {
             NSLog(@"退出全屏！！！");
             [self interfaceOrientation:UIInterfaceOrientationPortrait];
@@ -288,7 +296,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
     /**
      *  锁屏按钮点击事件
      */
-    [[[self.controlView.lockScreenButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] subscribeNext:^(UIButton *button) {
+    [[[[self.controlView.lockScreenButton rac_signalForControlEvents:UIControlEventTouchUpInside] takeUntil:self.rac_willDeallocSignal] deliverOnMainThread] subscribeNext:^(UIButton *button) {
         @strongify(self)
         button.selected = !button.selected;
         self.isLocked = button.selected;
@@ -313,7 +321,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
     }];
     // slider滑动中事件
-    [[[self.controlView.videoSlider rac_signalForControlEvents:UIControlEventValueChanged] takeUntil:self.rac_willDeallocSignal] subscribeNext:^(UISlider *slider) {
+    [[[[self.controlView.videoSlider rac_signalForControlEvents:UIControlEventValueChanged] takeUntil:self.rac_willDeallocSignal] deliverOnMainThread] subscribeNext:^(UISlider *slider) {
         @strongify(self)
         //NSLog(@"slider.value === %f",slider.value);
         
@@ -344,7 +352,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
         }
     }];
     // slider滑动结束事件
-    [[[self.controlView.videoSlider rac_signalForControlEvents:UIControlEventTouchUpInside | UIControlEventTouchCancel | UIControlEventTouchUpOutside] takeUntil:self.rac_willDeallocSignal] subscribeNext:^(UISlider *slider) {
+    [[[[self.controlView.videoSlider rac_signalForControlEvents:UIControlEventTouchUpInside | UIControlEventTouchCancel | UIControlEventTouchUpOutside] takeUntil:self.rac_willDeallocSignal] deliverOnMainThread] subscribeNext:^(UISlider *slider) {
         // 滑动结束延时隐藏controlView
         @strongify(self)
         [self autoFadeOutControlBar];
@@ -378,7 +386,6 @@ typedef NS_ENUM(NSInteger, PanDirection){
             break;
         }
     }
-    
     // 使用这个category的应用不会随着手机静音键打开而静音，可在手机静音下播放声音
 //    NSError *setCategoryError = nil;
 //    BOOL success = [[AVAudioSession sharedInstance]
@@ -409,7 +416,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
         {
             // 耳机拔掉
-            // 拔掉耳机继续播放
+            // 拔掉耳机暂停播放
             [self pause];
         }
             break;
@@ -428,7 +435,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 {
     // 调用AppDelegate单例记录播放状态是否锁屏
     //ZFPlayerShared.isLockScreen       = NO;
-    //self.controlView.lockScreenButton.selected = NO;
+    self.controlView.lockScreenButton.selected = NO;
     self.isLocked = NO;
     [self interfaceOrientation:UIInterfaceOrientationPortrait];
 }

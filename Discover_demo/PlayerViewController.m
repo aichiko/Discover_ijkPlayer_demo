@@ -51,7 +51,8 @@
 }
 
 - (void)playAction:(UIBarButtonItem *)playItem {
-    _playerView.videoURL = @"http://video.24hmb.com/mp4/R6916-R.mp4";
+    _playerView.videoURL = @"http://video.24hmb.com/mp4/R6914-R.mp4";
+    //http://video.24hmb.com/mp4/R6916-R.mp4
 }
 
 - (void)setupPlayer {
@@ -72,8 +73,8 @@
         // 注意此处，宽高比16：9优先级比1000低就行，在因为iPhone 4S宽高比不是16：9
         make.height.equalTo(self.playerView.mas_width).multipliedBy(9.0f/16.0f).with.priority(750);
     }];
-    
-    _playerView.videoURL = @"http://video.24hmb.com/mp4/R6914-R.mp4";
+    //http://video.24hmb.com/mp4/R6914-R.mp4
+    _playerView.videoURL = @"http://playv.upuday.com/ghlive/924173/playlist.m3u8";
     _playerView.goBackBlock = ^{
         @strongify(self)
         [self.navigationController popViewControllerAnimated:YES];
@@ -97,7 +98,7 @@
 // 是否支持自动转屏
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    return _playerView?!_playerView.isLocked:NO;//暂时用playerView的参数来控制，之后可以用单例来控制
 }
 
 // 支持哪些转屏方向

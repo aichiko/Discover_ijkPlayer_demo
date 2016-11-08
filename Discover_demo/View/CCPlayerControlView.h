@@ -26,6 +26,12 @@ typedef void(^SliderTapBlock)(CGFloat value);
 @property (nonatomic, strong) UISlider *videoSlider;
 /**  返回按钮 */
 @property (nonatomic, strong) UIButton *backButton;
+/**  关注按钮 */
+@property (nonatomic, strong) UIButton *careButton;
+/**  分享按钮 */
+@property (nonatomic, strong) UIButton *shareButton;
+/**  选会场按钮 */
+@property (nonatomic, strong) UIButton *selectButton;
 /** 全屏按钮 */
 @property (nonatomic, strong) UIButton *fullScreenButton;
 /** 系统菊花 */
@@ -38,6 +44,11 @@ typedef void(^SliderTapBlock)(CGFloat value);
  *  slider的点击事件，根据点击来设置当前播放时间
  */
 @property (nonatomic, copy) SliderTapBlock tapBlock;
+
+/**
+ 是否横屏，横屏则隐藏careButton和shareButton，显示selectButton
+ */
+@property (nonatomic, assign) BOOL isLandscape;
 
 /** 
  *  显示top、bottom、lockScreenButton
