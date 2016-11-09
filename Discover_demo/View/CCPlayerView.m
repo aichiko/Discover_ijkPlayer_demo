@@ -226,6 +226,10 @@ typedef NS_ENUM(NSInteger, PanDirection){
 
 
 - (void)controlViewAction {
+    
+    /**
+     使用这种方式会使点击方法运行过慢，需要换成代理来实现
+     */
     @weakify(self)
     /**
      *  更新播放时间的定时器，视图释放时信号消失

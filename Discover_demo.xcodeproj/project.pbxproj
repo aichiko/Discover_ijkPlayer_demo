@@ -14,6 +14,7 @@
 		D518DB2F1D7EB321000E958B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D518DB2E1D7EB321000E958B /* libc++.tbd */; };
 		D518DB311D7EB329000E958B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D518DB301D7EB329000E958B /* Security.framework */; };
 		D518DB331D7EB331000E958B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D518DB321D7EB331000E958B /* CoreTelephony.framework */; };
+		D51D6EAF1DD362ED0002C130 /* CCNetWorkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D51D6EAE1DD362ED0002C130 /* CCNetWorkManager.m */; };
 		D5D014961D7FAF2800EB6773 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D014951D7FAF2800EB6773 /* PlayerViewController.m */; };
 		D5D014991D7FAF5A00EB6773 /* IJKMediaFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5D014981D7FAF5A00EB6773 /* IJKMediaFramework.framework */; };
 		D5D0149C1D7FF5E800EB6773 /* CCPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D0149B1D7FF5E800EB6773 /* CCPlayerView.m */; };
@@ -110,6 +111,8 @@
 		D518DB2E1D7EB321000E958B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D518DB301D7EB329000E958B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D518DB321D7EB331000E958B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D51D6EAD1DD362ED0002C130 /* CCNetWorkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNetWorkManager.h; sourceTree = "<group>"; };
+		D51D6EAE1DD362ED0002C130 /* CCNetWorkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNetWorkManager.m; sourceTree = "<group>"; };
 		D5D014941D7FAF2800EB6773 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		D5D014951D7FAF2800EB6773 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		D5D014981D7FAF5A00EB6773 /* IJKMediaFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IJKMediaFramework.framework; sourceTree = "<group>"; };
@@ -246,6 +249,8 @@
 				D5D0149B1D7FF5E800EB6773 /* CCPlayerView.m */,
 				D5D01C931D81401300B4047F /* CCPlayerControlView.h */,
 				D5D01C941D81401300B4047F /* CCPlayerControlView.m */,
+				D51D6EAD1DD362ED0002C130 /* CCNetWorkManager.h */,
+				D51D6EAE1DD362ED0002C130 /* CCNetWorkManager.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -660,6 +665,7 @@
 				D5D014961D7FAF2800EB6773 /* PlayerViewController.m in Sources */,
 				D5F31AD41DAA19A700A3C390 /* UINavigationController+CCPlayerRotation.m in Sources */,
 				D5D0149C1D7FF5E800EB6773 /* CCPlayerView.m in Sources */,
+				D51D6EAF1DD362ED0002C130 /* CCNetWorkManager.m in Sources */,
 				D5F31AD61DAA19A700A3C390 /* UIViewController+CCPlayerRotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
